@@ -92,6 +92,7 @@ def get_pnf_extractor(trainsets, dataset_models, args):
         state_dict = torch.load(ckpt_path, map_location=device)['state_dict']
         film_layers[dataset_name] = {k: v for k, v in state_dict.items()
                                      if 'cls' not in k}
+        print('Loaded FiLM layers from {}'.format(ckpt_path))
 
     # define the base extractor
     base_extractor = get_model(None, args)
