@@ -2,10 +2,10 @@
 
 ################### Training independent feature extractors ###################
 function train_fn {
-    python train.py --model.name=$1 --data.train $2 --data.val $2 --data.test $2 --train.batch_size=$3 --train.learning_rate=$4 --train.max_iter=$5 --train.cosine_anneal_freq=$6 --train.eval_freq=$6
+    python train_net.py --model.name=$1 --data.train $2 --data.val $2 --data.test $2 --train.batch_size=$3 --train.learning_rate=$4 --train.max_iter=$5 --train.cosine_anneal_freq=$6 --train.eval_freq=$6
 }
 
-# Train an independent feature extractor on every training dataset
+# Train an independent feature extractor on every training dataset (the following models could be trained in parallel)
 
 # ImageNet
 NAME="imagenet-net"; TRAINSET="ilsvrc_2012"; BATCH_SIZE=64; LR="3e-2"; MAX_ITER=480000; ANNEAL_FREQ=48000

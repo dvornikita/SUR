@@ -16,7 +16,6 @@ from data.meta_dataset_reader import (MetaDatasetBatchReader,
 from models.model_helpers import get_model, get_optimizer
 from utils import Accumulator
 from config import args
-from paths import PROJECT_ROOT_FIXED
 
 
 def train():
@@ -68,9 +67,7 @@ def train():
             batch_dataset = sample['dataset_name']
             dataset_id = sample['dataset_ids'][0].detach().cpu().item()
             logits = model.forward(sample['images'])
-            # TODO: in singleclassifier feed different labels
-            labels = (sample['labels'] if args['allcat.single_classifier']
-                      else sample['local_classes'])
+            labels = sample['labels']
             batch_loss, stats_dict, _ = cross_entropy_loss(logits, labels)
             epoch_loss[batch_dataset].append(stats_dict['loss'])
             epoch_acc[batch_dataset].append(stats_dict['acc'])
