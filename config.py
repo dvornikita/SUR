@@ -2,26 +2,23 @@ import argparse
 parser = argparse.ArgumentParser(description='Train prototypical networks')
 
 # data args
-parser.add_argument('--data.train', type=str, default='cu_birds', metavar='trainset', nargs='+', help="data set name (default: imagenet)")
-parser.add_argument('--data.val', type=str, default='cu_birds', metavar='valset', nargs='+',
-                    help="data set name (default: imagenet)")
-parser.add_argument('--data.test', type=str, default='cu_birds', metavar='testset', nargs='+',
-                    help="data set name (default: imagenet)")
+parser.add_argument('--data.train', type=str, default='cu_birds', metavar='TRAINSETS', nargs='+', help="Datasets for training extractors")
+parser.add_argument('--data.val', type=str, default='cu_birds', metavar='VALSETS', nargs='+',
+                    help="Datasets used for validation")
+parser.add_argument('--data.test', type=str, default='cu_birds', metavar='TESTSETS', nargs='+',
+                    help="Datasets used for testing")
 parser.add_argument('--data.num_workers', type=int, default=32, metavar='NEPOCHS',
-                    help='number of workers that pre-process images in parallel')
+                    help="Number of workers that pre-process images in parallel")
 
 # model args
 default_model_name = 'noname'
 parser.add_argument('--model.name', type=str, default=default_model_name, metavar='MODELNAME',
-                    help="model name (default: {:s})".format(default_model_name))
-parser.add_argument('--model.many_names', type=str, default='', metavar='many_names', nargs='+',
-                    help="when testing on several networks")
+                    help="A name you give to the extractor".format(default_model_name))
 parser.add_argument('--model.backbone', default='resnet18', help="Use ResNet18 for experiments (default: False)")
 parser.add_argument('--model.classifier', type=str, default='cosine', choices=['none', 'linear', 'cosine'], help="Do classification using cosine similatity between activations and weights")
 parser.add_argument('--model.dropout', type=float, default=0, help="Adding dropout inside a basic block of widenet")
 
 # train args
-parser.add_argument('--train.determ', type=int, default=1, help="Set a random seed in the beginning of the training (default: True)")
 parser.add_argument('--train.batch_size', type=int, default=16, metavar='BS',
                     help='number of images in a batch')
 parser.add_argument('--train.max_iter', type=int, default=500000, metavar='NEPOCHS',
@@ -47,30 +44,30 @@ parser.add_argument('--train.cosine_anneal_freq', type=int, default=4000, metava
                     help='the value to divide learning rate by when decayin lr')
 parser.add_argument('--train.nesterov_momentum', action='store_true', help="If to augment query images in order to avearge the embeddings")
 
-parser.add_argument('--train.eval_freq', type=int, default=5000, metavar='CKPT',
-                    help='Saving model params after each CKPT epochs (default: 1000)')
-parser.add_argument('--train.eval_size', type=int, default=300, metavar='CKPT',
-                    help='Saving model params after each CKPT epochs (default: 1000)')
-parser.add_argument('--train.resume', type=int, default=1, help="Resume training starting from the last checkpoint (default: True)")
-parser.add_argument('--train.image_summary', type=float, default=0, help="If wants to drop tensorboard images")
+
+# evaluation during training
+parser.add_argument('--train.eval_freq', type=int, default=5000, metavar='EVAL_FREQ',
+                    help='How often to evaluate model during training')
+parser.add_argument('--train.eval_size', type=int, default=300, metavar='EVAL_SIZE',
+                    help='How many episodes to sample for validation')
+parser.add_argument('--train.resume', type=int, default=1, metavar='RESUME_TRAIN',
+                    help="Resume training starting from the last checkpoint (default: True)")
 
 
-parser.add_argument('--dump.name', type=str, default='noname', metavar='CKPT',
-                    help='Name for dataset dump')
-parser.add_argument('--dump.mode', type=str, default='noname', metavar='CKPT',
-                    help='Name for dataset dump')
-parser.add_argument('--dump.size', type=int, default=1000, metavar='CKPT',
-                    help='how many tasks to dump')
+# creating a database of features
+parser.add_argument('--dump.name', type=str, default='', metavar='DUMP_NAME',
+                    help='Name for dumped dataset of features')
+parser.add_argument('--dump.mode', type=str, default='test', metavar='DUMP_MODE',
+                    help='What split of the original dataset to dump')
+parser.add_argument('--dump.size', type=int, default=1000, metavar='DUMP_SIZE',
+                    help='Howe often to flush the features on the disk')
 
 
 # test args
-parser.add_argument('--test.set', type=str, default='test', choices=['train', 'test', 'val', 'test_new'], metavar='NCOPY', help='The number of test episodes sampled')
-parser.add_argument('--test.size', type=int, default=600, metavar='NCOPY',
+parser.add_argument('--test.size', type=int, default=600, metavar='TEST_SIZE',
                     help='The number of test episodes sampled')
-parser.add_argument('--test.augment_query', action='store_true', help="If to augment query images in order to avearge the embeddings")
-parser.add_argument('--test.augment_support', action='store_true', help="If to augment support images in order to avearge the embeddings")
-parser.add_argument('--test.distance', type=str, choices=['cos', 'l2'], default='cos', help="If to augment support images in order to avearge the embeddings")
-parser.add_argument('--test.no_log', action='store_true', help="not storing the results")
+parser.add_argument('--test.distance', type=str, choices=['cos', 'l2'], default='cos', metavar='DISTANCE_FN',
+                    help="If to augment support images in order to avearge the embeddings")
 
 # log args
 args = vars(parser.parse_args())

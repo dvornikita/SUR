@@ -1,4 +1,11 @@
-#!/usr/bin/env python3
+"""
+This code allows you to evaluate performance of a single feature extractor + NCC
+on several dataset.
+
+For example, to test a resnet18 feature extractor trained on cu_birds
+(that you downloaded) on test splits of ilsrvc_2012, dtd, vgg_flower, quickdraw, run:
+python ./test_extractor.py --model.name=birds-net --model.backbone=resnet18 --data.test ilsrvc_2012 dtd vgg_flower quickdraw
+"""
 
 import os
 import torch
