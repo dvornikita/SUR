@@ -12,7 +12,7 @@ This code requires the following:
 1. Clone or download this repository.
 2. Configure Meta-Dataset:
     * Follow the the "User instructions" in the Meta-Dataset repository (https://github.com/google-research/meta-dataset) for "Installation" and "Downloading and converting datasets". Brace yourself, the full process would take around a day.
-    * If you want to test out-of-domain behavior on additional datasets, namely, MNIST, CIFAR10, CIFAR100, follow the installation instructions in the [CNAPs repository](https://github.com/cambridge-mlg/cnaps) to get these datasets.
+    * If you want to test out-of-domain behavior on additional datasets, namely, MNIST, CIFAR10, CIFAR100, follow the installation instructions in the [CNAPs repository](https://github.com/cambridge-mlg/cnaps) to get these datasets. This step is takes little time and we recommended to do it.
 
 ## Usage
 Here is how to initialize, train and test our method:
@@ -41,12 +41,22 @@ And/or to train a parametric network family, run:
 
 
 #### Testing
-This step would run our SUR procedure to select appropriate features from a universal feature set.
+1. This step would run our SUR procedure to select appropriate features from a universal feature set.
 To select from features obtained with different networks, run:
-```./scripts/test_networks.sh```
+```python test.py --model.backbone=resnet18```
 To select from features obtained with a parametric network family, run:
-```./scripts/test_pnf.sh```
+```python test.py --model.backbone=resnet18_pnf```
 Note: If you train the models yourself, be sure you have trained the corresponding extractors.
+
+#### Offline Testing (optional)
+To speed up the testing procedure, one could first dump the features on the hard drive, and then use them for selection directly, without needing to run a CNN. To do so, follow the steps:
+1. Dump test features extracted from the test episodes on your hard drive by running
+```./scripts/dump_test_episodes.sh```
+
+2. Test SUR offline. Depending on your desired feature extractor, run:
+```python test_offline.py --model.backbone=resnet18``` or ```python test_offline.py --model.backbone=resnet18_pnf```
+
+This step is useful for those who want to experiment with selection by SUR and want to avoid recomputing the same features every run.
 
 ## Expected Results
 Below are the results extracted from our papers. The results will vary from run to run by a percent or two up or 

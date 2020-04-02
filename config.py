@@ -59,8 +59,8 @@ parser.add_argument('--dump.name', type=str, default='', metavar='DUMP_NAME',
                     help='Name for dumped dataset of features')
 parser.add_argument('--dump.mode', type=str, default='test', metavar='DUMP_MODE',
                     help='What split of the original dataset to dump')
-parser.add_argument('--dump.size', type=int, default=1000, metavar='DUMP_SIZE',
-                    help='Howe often to flush the features on the disk')
+parser.add_argument('--dump.size', type=int, default=600, metavar='DUMP_SIZE',
+                    help='Howe many episodes to dump')
 
 
 # test args

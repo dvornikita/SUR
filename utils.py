@@ -147,12 +147,12 @@ def read_textfile(filename, skip_last_line=True):
     return container
 
 
-def check_dir(dirname, recursive=False, verbose=True):
+def check_dir(dirname, verbose=True):
     """This function creates a directory
     in case it doesn't exist"""
     try:
         # Create target Directory
-        os.mkdir(dirname)
+        os.makedirs(dirname)
         if verbose:
             print("Directory ", dirname, " was created")
     except FileExistsError:
