@@ -30,30 +30,41 @@ Here is how to initialize, train and test our method:
 #### Getting the Feature Extractors
 1. The easiest way is to download our pre-trained models and use them to obtain a universal set of features directly.
 If that is what you want, execute the following command in the root directory of this project:
+
     ```wget http://thoth.inrialpes.fr/research/SUR/all_weights.zip && unzip all_weights.zip && rm all_weights.zip```
+
 It will donwnload all the weights and place them in the `./weights` directory.
 
 2. Alternatively, instead of using the pretrained models, one can train the models from scratch.
 To train 8 independent feature extractors, run:
+
 ```./scripts/train_networks.sh```
+
 And/or to train a parametric network family, run:
+
 ```./scripts/train_pnf.sh```
 
 
 #### Testing
 1. This step would run our SUR procedure to select appropriate features from a universal feature set.
 To select from features obtained with different networks, run:
+
 ```python test.py --model.backbone=resnet18```
+
 To select from features obtained with a parametric network family, run:
+
 ```python test.py --model.backbone=resnet18_pnf```
+
 Note: If you train the models yourself, be sure you have trained the corresponding extractors.
 
 #### Offline Testing (optional)
 To speed up the testing procedure, one could first dump the features on the hard drive, and then use them for selection directly, without needing to run a CNN. To do so, follow the steps:
 1. Dump test features extracted from the test episodes on your hard drive by running
+
 ```./scripts/dump_test_episodes.sh```
 
 2. Test SUR offline. Depending on your desired feature extractor, run:
+
 ```python test_offline.py --model.backbone=resnet18``` or ```python test_offline.py --model.backbone=resnet18_pnf```
 
 This step is useful for those who want to experiment with selection by SUR and want to avoid recomputing the same features every run.
