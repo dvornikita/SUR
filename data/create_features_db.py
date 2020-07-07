@@ -45,7 +45,7 @@ class DatasetWriter(object):
             evalset = valsets[0]
             self.load_sample = lambda sess: loader.get_validation_task(sess, evalset)
 
-        dump_name = mode + '_dump' if not args['dump.name'] else args['dump.name']
+        dump_name = self._mode + '_dump' if not args['dump.name'] else args['dump.name']
         path = check_dir(os.path.join(META_DATA_ROOT, 'Dumps', self.args['model.backbone'],
                                       self._mode, evalset, dump_name))
         self._path = path
