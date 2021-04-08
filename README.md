@@ -79,19 +79,21 @@ network family, which has fewer parameters. More details about that could be fou
 
 | Dataset       | SUR           | SUR-pnf      |
 | ---           | ---           | ---          |
-| Imagenet      | 56.3±1.1      | 56.4±1.2     |
-| Omniglot      | 93.1±0.5      | 88.5±0.8     |
-| Aircraft      | 85.4±0.7      | 79.5±0.8     |
-| Birds         | 71.4±1.0      | 76.4±0.9     |
-| Textures      | 71.5±0.8      | 73.1±0.7     |
-| Quick Draw    | 81.3±0.6      | 75.7±0.7     |
-| Fungi         | 63.1±1.0      | 48.2±0.9     |
-| VGG Flower    | 82.8±0.7      | 90.6±0.5     |
-| Traffic Signs | 70.4±0.8      | 65.1±0.8     |
-| MSCOCO        | 52.4±1.1      | 52.1±1.0     |
-| MNIST         | 94.3±0.4      | 93.2±0.4     |
-| CIFAR10       | 66.8±0.9      | 66.4±0.8     |
-| CIFAR100      | 56.6±1.0      | 57.1±1.0     |
+| Imagenet      | 56.1±1.1      | 56.0±1.1     |
+| Omniglot      | 93.1±0.5      | 90.0±0.6     |
+| Aircraft      | 84.6±0.7      | 79.7±0.8     |
+| Birds         | 70.6±1.0      | 75.9±0.9     |
+| Textures      | 71.0±0.8      | 72.5±0.7     |
+| Quick Draw    | 81.3±0.6      | 76.7±0.7     |
+| Fungi         | 64.2±1.1      | 49.8±1.1     |
+| VGG Flower    | 82.8±0.8      | 90.0±0.6     |
+| Traffic Signs | 53.4±1.0      | 52.2±0.8     |
+| MSCOCO        | 50.1±1.0      | 50.2±1.0     |
+| MNIST         | 94.5±0.5      | 93.1±0.4     |
+| CIFAR10       | 64.1±1.0      | 65.9±0.8     |
+| CIFAR100      | 56.1±1.0      | 57.1±1.0     |
+
+
 
 ## Citation
 If you use this code, please cite our [Selecting Relevant Features from a Universal Representation for Few-shot Learning](https://arxiv.org/abs/2003.09338) paper:
