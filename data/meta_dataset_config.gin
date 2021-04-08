@@ -17,6 +17,7 @@ DataConfig.image_height = 84
 DataConfig.shuffle_buffer_size = 1000
 DataConfig.read_buffer_size_bytes = 1048576  # 1 MB (1024**2)
 DataConfig.num_prefetch = 400
+
 meta_dataset_processing.ImageDecoder.image_size = 84
 
 # If we decode features then change the lines below to use FeatureDecoder.

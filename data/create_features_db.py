@@ -45,7 +45,7 @@ class DatasetWriter(object):
             evalset = valsets[0]
             self.load_sample = lambda sess: loader.get_validation_task(sess, evalset)
 
-        dump_name = mode + '_dump' if not args['dump.name'] else args['dump.name']
+        dump_name = self._mode + '_dump' if not args['dump.name'] else args['dump.name']
         path = check_dir(os.path.join(META_DATA_ROOT, 'Dumps', self.args['model.backbone'],
                                       self._mode, evalset, dump_name))
         self._path = path
@@ -78,11 +78,14 @@ class DatasetWriter(object):
         config = tf.compat.v1.ConfigProto()
         config.gpu_options.allow_growth = True
         with tf.compat.v1.Session(config=config) as session:
+            # Sampling task idxs
             for idx in tqdm(range(n_tasks)):
                 # compressing image
                 sample = self.load_sample(session)
+                # Embedding task images with my network
                 support_embed_dict = self.embed_many(sample['context_images'])
                 query_embed_dict = self.embed_many(sample['target_images'])
+                # Putting the data into containers
                 support_labels = SerializableArray(sample['context_labels'].detach().cpu().numpy())
                 query_labels = SerializableArray(sample['target_labels'].detach().cpu().numpy())
                 SerializableArray.__module__ = 'utils'
@@ -101,7 +104,7 @@ class DatasetWriter(object):
                 txn.put(f"{idx}_labels_query".encode("ascii"), pkl.dumps(query_labels))
                 self._keys.extend([f"{idx}_labels_support", f"{idx}_labels_query"])
 
-                # flushing into lmdb
+                # flushing into lmdb (on the disk)
                 if idx > 0 and idx % self._write_frequency == 0:
                     txn.commit()
                     txn = self._db.begin(write=True)

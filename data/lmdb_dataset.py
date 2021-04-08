@@ -18,6 +18,7 @@ class LMDBDataset:
         self.mode = mode
         self.datasets = datasets
 
+        # opening lmdbs
         self.dataset_readers = dict()
         for evalset in datasets:
             all_names = os.listdir(os.path.join(META_DATA_ROOT, 'Dumps',

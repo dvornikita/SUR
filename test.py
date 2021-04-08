@@ -20,7 +20,7 @@ from config import args
 
 
 def main():
-    LIMITER = 5
+    LIMITER = 600    # has to be 600 for the testing under MetaDataset protocol
     config = tf.compat.v1.ConfigProto()
     config.gpu_options.allow_growth = True
 
