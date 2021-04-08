@@ -12,6 +12,7 @@ This code requires the following:
 1. Clone or download this repository.
 2. Configure Meta-Dataset:
     * Follow the the "User instructions" in the Meta-Dataset repository (https://github.com/google-research/meta-dataset) for "Installation" and "Downloading and converting datasets". Brace yourself, the full process would take around a day.
+      *NOTE:* the MetaDataset codebase has significantly changed from the release of this code and it won't work as is. Please, run `git checkout 056ccac` in the MetaDataset root folder to checkout to the code's version used with in this project.
     * If you want to test out-of-domain behavior on additional datasets, namely, MNIST, CIFAR10, CIFAR100, follow the installation instructions in the [CNAPs repository](https://github.com/cambridge-mlg/cnaps) to get these datasets. This step is takes little time and we recommended to do it.
 
 ## Usage
